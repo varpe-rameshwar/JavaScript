@@ -1,0 +1,81 @@
+taxes = {
+    sgst: 2.7,
+    cgst: 1.9
+};
+
+menuCard = [
+    {
+        itemType: 'roti',
+        price: 8
+    },
+    {
+        itemType: 'daal',
+        price: 30
+    },
+    {
+        itemType: 'rice',
+        price: 35
+    },
+    {
+        itemType: 'paneer',
+        price: 120
+    },
+    {
+        itemType: 'idli',
+        price: 50
+    },
+    {
+        itemType: 'biryani',
+        price: 150
+    }
+];
+
+let order = [];
+
+function addItemToOrder(itemName, quantity) {
+    let item = {};
+    item['itemType'] = itemName;
+    item['quantity'] = quantity;
+    if (order.length < 1) {
+        order.push(item);
+    }
+    else{
+        let count = 0;
+        for(i in order){
+            if(order[i].itemType == itemName){
+                order[i].quantity += quantity;
+                count = 1;
+                break;
+            }
+        }
+        if(count == 0){
+            order.push(item);
+        }
+    }
+}
+
+function itemTotal(itemName,quantity){
+    for(i in menuCard){
+        if(menuCard[i].itemType == itemName){
+            return menuCard[i].price * quantity;
+        }
+    }
+}
+
+function generateBill(){
+    console.log("                  Bill                     ");
+    console.log("*******************************************");
+    console.log("S/N     Item Name      Item Price     Quantity    Item Total");
+    for(let i in order){
+    console.log(` ${i+1}       ${order[i].itemName}          ${order[i].quantity}      ${itemTotal(order[i].itemName, order[i].quantity)}`);
+    }
+}
+
+addItemToOrder('paneer',2);
+addItemToOrder('paneer',1);
+addItemToOrder('roti',4);
+
+console.log(order);
+console.log(itemTotal('paneer',2));
+
+console.log(generateBill());
